@@ -1,0 +1,20 @@
+{
+  "name": "yt-videos-summerizer",
+  "version": "1.0.0",
+  "description": "This simple program take a youtube video link and return a summary of the video made by chatGPT. It parse the video and extract the subtitles, then it split the subtitles in text chunks and send them to chatGPT. At the end, it ask chatGPT to generate clear summary of the video from his previous answers.",
+  "main": "text_chunker.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "build": "tsc",
+    "serve": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
+}
