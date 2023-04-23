@@ -1,9 +1,16 @@
+const DEFAULT_CHUNK_SIZE = 4000;
+
 function tokenize(text: string) {
+	if (!text) {
+		return [];
+	}
+
 	const tokens = text.match(/\p{L}+|\p{N}+|[^\p{L}\p{N}\s]+|\s+/gu);
 	return tokens || [];
 }
 
-export function splitIntoChunks(text: string, chunkSize: number = 4000) {
+export function splitIntoChunks(text: string) {
+	const chunkSize = process.env.CHUNK_SIZE ? parseInt(process.env.CHUNK_SIZE) : DEFAULT_CHUNK_SIZE;
 	const tokens = tokenize(text);
 	const chunks = [];
 

@@ -1,8 +1,7 @@
-/.idea/
-/chunks/
-/node_modules/
+.idea/
+node_modules/
 .env
-tokens.json
 
-notes.md
-summarized_transcript.txt
+# Output files
+/notes.md
+/summarized_transcript.txt

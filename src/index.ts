@@ -1,8 +1,8 @@
+import dotenv from "dotenv";
 import {splitIntoChunks} from "./text_chunker";
 import {fetchTranscript} from "./transcript";
 import {summarizeTranscript} from "./openai";
 import * as fs from "fs";
-import dotenv from "dotenv";
 
 dotenv.config();
 
