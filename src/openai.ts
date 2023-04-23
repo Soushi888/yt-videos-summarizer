@@ -1,73 +1,73 @@
-import {ChatCompletionRequestMessage, Configuration, OpenAIApi} from "openai";
-import {splitIntoChunks} from "./text_chunker";
+import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
+import { splitIntoChunks } from "./text_chunker";
 import * as fs from "fs";
 
-enum SystemPrompt {
-	NOTES = "Write detailed notes about this video transcript part in a bullet list .\n\n---\n\nTranscript part:\n\n",
-	SUMMARIZE = "Create a clean and detailed summary of at least 350 words from those notes.\n\n---\n\nNotes:\n\n",
+enum PromptType {
+	CREATE_NOTES = "Write detailed notes about this video transcript part in a bullet list .\n\n---\n\nTranscript part:\n\n",
+	CREATE_SUMMARY = "Create a clean and detailed summary of at least 350 words from those notes.\n\n---\n\nNotes:\n\n",
 }
 
-const chunkSystemPrompt: ChatCompletionRequestMessage = {
+const notesPrompt: ChatCompletionRequestMessage = {
 	role: "system",
-	content: SystemPrompt.NOTES,
-}
+	content: PromptType.CREATE_NOTES,
+};
 
-const finalAnalyseSystemPrompt: ChatCompletionRequestMessage = {
+const summarizePrompt: ChatCompletionRequestMessage = {
 	role: "system",
-	content: SystemPrompt.SUMMARIZE,
-}
+	content: PromptType.CREATE_SUMMARY,
+};
 
-export async function summarizeTranscript(textChunks: string[]): Promise<string> {
+export async function createSummarizedTranscript(transcriptChunks: string[]): Promise<string> {
 	const openai = new OpenAIApi(new Configuration({
 		apiKey: process.env.OPENAI_API_KEY,
 		organization: process.env.OPENAI_ORGANIZATION,
 	}));
 
-	const allNotesArray = await takeNotesFromChunks(textChunks, openai);
-	const allNotes = allNotesArray.join('\n\n---\n\n');
-	fs.writeFileSync('notes.md', allNotes);
+	const allNotes = await createNotesForChunks(transcriptChunks, openai);
+	const allNotesText = allNotes.join('\n\n---\n\n');
+	fs.writeFileSync('notes.md', allNotesText);
 
-	console.log("Making final summary...");
+	console.log("Creating final summary...");
 
-	const notesChunks = splitIntoChunks(allNotes, 8000);
+	const notesChunks = splitIntoChunks(allNotesText, 8000);
 
-	return await summarizeNotes(notesChunks, openai);
+	return await createSummaryFromNotes(notesChunks, openai);
 }
 
-async function callOpenAI(text: string, openai: OpenAIApi, systemPrompt: SystemPrompt): Promise<string> {
-	const systemPromptMessage = systemPrompt === SystemPrompt.NOTES ? chunkSystemPrompt : finalAnalyseSystemPrompt;
+async function callOpenAI(text: string, openai: OpenAIApi, promptType: PromptType): Promise<string> {
+	const promptMessage = promptType === PromptType.CREATE_NOTES ? notesPrompt : summarizePrompt;
 
 	const response = await openai.createChatCompletion({
 		model: "gpt-3.5-turbo",
-		messages: [systemPromptMessage, {role: "user", content: text}],
+		messages: [promptMessage, { role: "user", content: text }],
 	});
 
 	return response.data.choices[0].message!.content;
 }
 
-async function takeNotesFromChunks(chunks: string[], openai: OpenAIApi): Promise<string[]> {
+async function createNotesForChunks(transcriptChunks: string[], openai: OpenAIApi): Promise<string[]> {
 	const notes = [];
 
-	for (let i = 0; i < chunks.length; i++) {
-		console.log(`Take notes for chunk ${i + 1} of ${chunks.length}...`)
-		const response = await callOpenAI(chunks[i], openai, SystemPrompt.NOTES);
+	for (let i = 0; i < transcriptChunks.length; i++) {
+		console.log(`Creating notes for chunk ${i + 1} of ${transcriptChunks.length}...`);
+		const response = await callOpenAI(transcriptChunks[i], openai, PromptType.);
 		notes.push(response);
 	}
 
 	return notes;
 }
 
-async function summarizeNotes(chunks: string[], openai: OpenAIApi): Promise<string> {
-	if (chunks.length === 1) {
-		return callOpenAI(chunks[0], openai, SystemPrompt.SUMMARIZE);
+async function createSummaryFromNotes(summaryChunks: string[], openai: OpenAIApi): Promise<string> {
+	if (summaryChunks.length === 1) {
+		return callOpenAI(summaryChunks[0], openai, PromptType.CREATE_SUMMARY);
 	}
 
-	const responses = [];
+	const summaryResponses = [];
 
-	for (let i = 0; i < chunks.length; i++) {
-		const response = await callOpenAI(chunks[i], openai, SystemPrompt.SUMMARIZE);
-		responses.push(response);
+	for (let i = 0; i < summaryChunks.length; i++) {
+		const response = await callOpenAI(summaryChunks[i], openai, PromptType.CREATE_SUMMARY);
+		summaryResponses.push(response);
 	}
 
-	return callOpenAI(responses.join('\n\n---\n\n'), openai, SystemPrompt.SUMMARIZE);
+	return callOpenAI(summaryResponses.join('\n\n---\n\n'), openai, PromptType.CREATE_SUMMARY);
 }
