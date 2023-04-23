@@ -4,7 +4,7 @@ import * as fs from "fs";
 
 enum SystemPrompt {
 	NOTES = "Write detailed notes about this video transcript part in a bullet list .\n\n---\n\nTranscript part:\n\n",
-	FINAL_SUMMARIZE = "Create a clean and detailed summary of at least 350 words from those notes.\n\n---\n\nNotes:\n\n",
+	SUMMARIZE = "Create a clean and detailed summary of at least 350 words from those notes.\n\n---\n\nNotes:\n\n",
 }
 
 const chunkSystemPrompt: ChatCompletionRequestMessage = {
@@ -14,7 +14,7 @@ const chunkSystemPrompt: ChatCompletionRequestMessage = {
 
 const finalAnalyseSystemPrompt: ChatCompletionRequestMessage = {
 	role: "system",
-	content: SystemPrompt.FINAL_SUMMARIZE,
+	content: SystemPrompt.SUMMARIZE,
 }
 
 export async function summarizeTranscript(textChunks: string[]): Promise<string> {
@@ -29,9 +29,9 @@ export async function summarizeTranscript(textChunks: string[]): Promise<string>
 
 	console.log("Making final summary...");
 
-	const rawSummaryChunks = splitIntoChunks(allNotes, 8000);
+	const notesChunks = splitIntoChunks(allNotes, 8000);
 
-	return await summarizeFinalSummary(rawSummaryChunks, openai);
+	return await summarizeNotes(notesChunks, openai);
 }
 
 async function callOpenAI(text: string, openai: OpenAIApi, systemPrompt: SystemPrompt): Promise<string> {
@@ -57,17 +57,17 @@ async function takeNotesFromChunks(chunks: string[], openai: OpenAIApi): Promise
 	return notes;
 }
 
-async function summarizeFinalSummary(chunks: string[], openai: OpenAIApi): Promise<string> {
+async function summarizeNotes(chunks: string[], openai: OpenAIApi): Promise<string> {
 	if (chunks.length === 1) {
-		return callOpenAI(chunks[0], openai, SystemPrompt.FINAL_SUMMARIZE);
+		return callOpenAI(chunks[0], openai, SystemPrompt.SUMMARIZE);
 	}
 
 	const responses = [];
 
 	for (let i = 0; i < chunks.length; i++) {
-		const response = await callOpenAI(chunks[i], openai, SystemPrompt.FINAL_SUMMARIZE);
+		const response = await callOpenAI(chunks[i], openai, SystemPrompt.SUMMARIZE);
 		responses.push(response);
 	}
 
-	return callOpenAI(responses.join('\n\n---\n\n'), openai, SystemPrompt.FINAL_SUMMARIZE);
+	return callOpenAI(responses.join('\n\n---\n\n'), openai, SystemPrompt.SUMMARIZE);
 }
