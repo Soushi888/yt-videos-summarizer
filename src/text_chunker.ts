@@ -1,16 +1,18 @@
-import fs from 'fs';
-
 function tokenize(text: string) {
 	const tokens = text.match(/\p{L}+|\p{N}+|[^\p{L}\p{N}\s]+|\s+/gu);
 	return tokens || [];
 }
 
-function splitIntoChunks(text: string, chunkSize: number) {
+export function splitIntoChunks(text: string, chunkSize: number = 4000) {
 	const tokens = tokenize(text);
 	const chunks = [];
 
 	let currentChunk = [];
 	let currentChunkSize = 0;
+
+	if (tokens.length < chunkSize) {
+		return [text];
+	}
 
 	for (const token of tokens) {
 		if (currentChunkSize + token.length > chunkSize) {
@@ -27,32 +29,7 @@ function splitIntoChunks(text: string, chunkSize: number) {
 		chunks.push(currentChunk.join(''));
 	}
 
+	console.log(`Split text into ${chunks.length} chunks.`)
+
 	return chunks;
-}
-
-export function chunkFile() {
-	const inputFilePath = 'input.txt';
-	const outputDirPath = 'chunks';
-	const chunkSize = 8000;
-
-	fs.promises.mkdir(outputDirPath, {recursive: true}).then(() => {
-		fs.readFile(inputFilePath, 'utf-8', (err: NodeJS.ErrnoException | null, data: string) => {
-			if (err) {
-				console.error(err);
-				return;
-			}
-
-			const chunks = splitIntoChunks(data, chunkSize);
-
-			chunks.forEach((chunk, index) => {
-				fs.writeFile(`${outputDirPath}/chunk_${index + 1}.txt`, chunk, 'utf-8', (err: NodeJS.ErrnoException | null) => {
-					if (err) {
-						console.error(err);
-					} else {
-						console.log(`Chunk ${index + 1} written to file`);
-					}
-				});
-			});
-		});
-	});
 }

@@ -2,3 +2,7 @@
 /chunks/
 /node_modules/
 .env
+tokens.json
+
+notes.md
+summarized_transcript.txt

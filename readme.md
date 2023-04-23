@@ -1,9 +1,11 @@
 # Youtube Videos Summarizer
 
-This simple program take a youtube video link and return a summary of the video made by chatGPT.
-It fetches captions of the video with the youtube-api-v3, then it split the captions in text chunks and send them to chatGPT. At the end, it asks chatGPT to generate clear summary of the video from his previous answers.
+## Description
 
-1. Fetch the captions of the video with the youtube-api-v3
-2. Split the subtitles in text chunks
-3. Send the text chunks to chatGPT and collect the answers
-4. Ask chatGPT to generate clear summary of the video from the answers collection
+This project is a web application that allows users to summarize youtube videos. The user can enter the link of the video and the application will return a summary of the video in a text file.
+
+1. Fetch the transcript of the video with youtube-transcript
+2. Split the transcript in text chunks
+3. Send the text chunks to chatGPT and ask it to take notes
+4. Ask chatGPT to generate a full detailed summary of the video from the collected notes
+5. Return the summary to the user in a text file
