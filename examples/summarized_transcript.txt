@@ -1,1 +1,11 @@
-The speaker, a blockchain developer, demonstrates how artificial intelligence (AI) tools can help create a full-stack blockchain application in under 20 minutes. The process shown involves creating a new truffle app, compiling and deploying smart contracts, and developing the front-end using React.js. The speaker also used Stable Diffusion to create images for the NFT project. Various steps and terminal commands were demonstrated throughout the video. AI image generators and Chad GPT were used to import images and add a navbar to the project. At the end of the video, the speaker emphasizes that while technology can help get something off the ground quickly, it cannot replace the need for coders. The speaker encourages viewers to visit their YouTube homepage and enroll in their bootcamp on adaptivevision.com to become an in-demand blockchain master in just a few months.
+In the video, the speaker uses artificial intelligence (AI) technology to create a full-stack blockchain application in under 20 minutes. The speaker claims to have no prior coding knowledge and uses AI prompts to generate the necessary code.
+
+The speaker uses Chat GPT and Stable Diffusion to prompt instructions for creating a full-stack blockchain app using Ethereum. The speaker installs text editors, node.js, Ganache, Truffle, and Metamask.
+
+Using Chat GPT, the speaker is provided with a full smart contract code for an NFT collection. OpenZeppelin contracts are installed and imported, and the NFT smart contract file is added to the Truffle project. The smart contract is deployed using the migration script, which is run using the triple migrate command.
+
+The front end is developed using React.js, and the app is connected to the smart contract using web3.js. The images for the NFTs are generated using AI image generators and added to the app. 
+
+The speaker emphasizes that the technology shown in the video will not replace coders completely, but it will help increase their effectiveness and help them accomplish tasks faster. The AI technology can be used to accelerate learning and development, but coding skills are still necessary. 
+
+The speaker encourages viewers to subscribe to their channel for more blockchain-related content and to join their bootcamp at adaptiveversion.com to become a "blockchain master." The bootcamp does not require any coding experience and aims to help individuals become in-demand blockchain developers, increase their salary, and break into the booming blockchain industry.
