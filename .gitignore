@@ -1,6 +1,7 @@
 .idea/
 node_modules/
 .env
+dist/
 
 # Output files
 /notes.md

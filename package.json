@@ -1,8 +1,8 @@
 {
-  "name": "yt-videos-summerizer",
+  "name": "yt-videos-summarizer",
   "version": "1.0.0",
-  "description": "This simple program take a youtube video link and return a summary of the video made by chatGPT. It parse the video and extract the subtitles, then it split the subtitles in text chunks and send them to chatGPT. At the end, it ask chatGPT to generate clear summary of the video from his previous answers.",
-  "main": "text_chunker.js",
+  "description": "This program uses OpenAI's GPT-3.5 Turbo model to automatically summarize YouTube video transcripts. It fetches the\ntranscript, generates detailed notes for each part of the transcript, and creates a final summary based on the notes.",
+  "main": "src/index.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",

@@ -35,18 +35,6 @@ OPENAI_API_KEY=your_openai_api_key
 OPENAI_ORGANIZATION=your_openai_organization
 ```
 
-## Usage
-
-To summarize a YouTube video transcript, run the following command with the video URL as an argument:
-
-```bash
-node index.js https://www.youtube.com/watch?v=video_id
-```
-
-The program will fetch the transcript, split it into chunks, generate detailed notes for each chunk, and create a final
-summary. The detailed notes will be saved in a file called `notes.md`, and the summarized transcript will be saved in a
-file called `summarized_transcript.txt`.
-
 ## Chunk Size
 
 ```bash
@@ -68,11 +56,26 @@ enum SystemPrompt {
 }
 ```
 
+## Usage
+
+To summarize a YouTube video transcript, run the following command with the video URL as an argument:
+
+```bash
+node index.js https://www.youtube.com/watch?v=video_id
+```
+
+The program will fetch the transcript, split it into chunks, generate detailed notes for each chunk, and create a final
+summary. The detailed notes will be saved in a file called `notes.md`, and the summarized transcript will be saved in a
+file called `summarized_transcript.txt`.
+
 ## Example
 
 ![img.png](examples/example.png)
 
-For a video named "**How to Build a FULL App With ChatGPT in 20 minutes!**", length 18 minutes and 35 seconds, the program generated the following files:
+Input link: https://www.youtube.com/watch?v=i_a9bqvqmzo
+
+For a video named "**How to Build a FULL App With ChatGPT in 20 minutes!**", length 18 minutes and 35 seconds, the
+program generated the following files:
 
 - [notes.md](examples/notes.md)
 - [summarized_transcript.txt](examples/summarized_transcript.txt)

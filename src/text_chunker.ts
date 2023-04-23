@@ -9,8 +9,7 @@ function tokenize(text: string) {
 	return tokens || [];
 }
 
-export function splitIntoChunks(text: string) {
-	const chunkSize = process.env.CHUNK_SIZE ? parseInt(process.env.CHUNK_SIZE) : DEFAULT_CHUNK_SIZE;
+export function splitIntoChunks(text: string, chunkSize: number = DEFAULT_CHUNK_SIZE) {
 	const tokens = tokenize(text);
 	const chunks = [];
 
