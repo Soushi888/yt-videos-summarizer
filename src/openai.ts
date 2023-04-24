@@ -50,7 +50,7 @@ async function createNotesForChunks(transcriptChunks: string[], openai: OpenAIAp
 
 	for (let i = 0; i < transcriptChunks.length; i++) {
 		console.log(`Creating notes for chunk ${i + 1} of ${transcriptChunks.length}...`);
-		const response = await callOpenAI(transcriptChunks[i], openai, PromptType.);
+		const response = await callOpenAI(transcriptChunks[i], openai, PromptType.CREATE_NOTES);
 		notes.push(response);
 	}
 
