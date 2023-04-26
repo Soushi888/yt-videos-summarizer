@@ -10,8 +10,8 @@ dotenv.config();
 	const videoUrl = process.argv[2]
 	const transcript = await fetchTranscript(videoUrl);
 	const chunkSize = process.env.CHUNK_SIZE ? parseInt(process.env.CHUNK_SIZE) : 4000;
-	const chunks = splitIntoChunks(transcript, chunkSize);
-	const summarized_transcript = await createSummarizedTranscript(chunks);
+	const transcriptChunks = splitIntoChunks(transcript, chunkSize);
+	const summarized_transcript = await createSummarizedTranscript(transcriptChunks);
 	fs.writeFileSync('summarized_transcript.txt', summarized_transcript);
-	console.log("Done.")
+	console.log("Done.");
 })();

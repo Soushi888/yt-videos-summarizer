@@ -2,10 +2,12 @@ import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
 import { splitIntoChunks } from "./text_chunker";
 import * as fs from "fs";
 
-enum PromptType {
-	CREATE_NOTES = "Write detailed notes about this video transcript part in a bullet list .\n\n---\n\nTranscript part:\n\n",
-	CREATE_SUMMARY = "Create a clean and detailed summary of at least 350 words from those notes.\n\n---\n\nNotes:\n\n",
-}
+const PromptType = {
+	CREATE_NOTES: "Write detailed notes about this video transcript part in a bullet list .\n\n---\n\nTranscript part:\n\n",
+	CREATE_SUMMARY: "Create a clean and detailed summary of at least 350 words from those notes.\n\n---\n\nNotes:\n\n",
+} as const;
+
+type PromptType = typeof PromptType[keyof typeof PromptType];
 
 const notesPrompt: ChatCompletionRequestMessage = {
 	role: "system",

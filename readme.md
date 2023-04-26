@@ -56,12 +56,20 @@ enum SystemPrompt {
 }
 ```
 
+## Build
+
+To build the program, run the following command:
+
+```bash
+npm run build
+```
+
 ## Usage
 
 To summarize a YouTube video transcript, run the following command with the video URL as an argument:
 
 ```bash
-node index.js https://www.youtube.com/watch?v=video_id
+node dist/index.js https://www.youtube.com/watch?v=<video_id>
 ```
 
 The program will fetch the transcript, split it into chunks, generate detailed notes for each chunk, and create a final
