@@ -1,25 +1,41 @@
 {
   "name": "yt-videos-summarizer",
-  "version": "1.0.0",
-  "description": "This program uses OpenAI's GPT-3.5 Turbo model to automatically summarize YouTube video transcripts. It fetches the\ntranscript, generates detailed notes for each part of the transcript, and creates a final summary based on the notes.",
-  "main": "src/index.ts",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
-    "build": "tsc",
-    "serve": "node dist/index.js"
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "playwright test",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "test:unit": "vitest",
+    "lint": "prettier --plugin-search-dir . --check . && eslint .",
+    "format": "prettier --plugin-search-dir . --write ."
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "dotenv": "^16.0.3",
-    "nodemon": "^2.0.22",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
-  },
-  "dependencies": {
+    "@playwright/test": "^1.28.1",
+    "@skeletonlabs/skeleton": "^1.2.5",
+    "@sveltejs/adapter-auto": "^2.0.0",
+    "@sveltejs/kit": "^1.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.28.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-svelte3": "^4.0.0",
+    "postcss": "^8.4.23",
+    "prettier": "^2.8.0",
+    "prettier-plugin-svelte": "^2.8.1",
+    "svelte": "^3.54.0",
+    "svelte-check": "^3.0.1",
+    "tailwindcss": "^3.3.2",
+    "tslib": "^2.4.1",
+    "typescript": "^5.0.0",
+    "vite": "^4.3.0",
+    "vitest": "^0.25.3",
     "openai": "^3.2.1",
     "youtube-transcript": "^1.0.5"
-  }
+  },
+  "type": "module"
 }

@@ -1,8 +1,11 @@
 .idea/
-node_modules/
+.DS_Store
+node_modules
+/build
+/.svelte-kit
+/package
 .env
-dist/
-
-# Output files
-/notes.md
-/summarized_transcript.txt
+.env.*
+!.env.example
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*

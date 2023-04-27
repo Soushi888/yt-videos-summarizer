@@ -1,6 +1,8 @@
-import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
+import { type ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
 import { splitIntoChunks } from "./text_chunker";
-import * as fs from "fs";
+
+const OPENAI_API_KEY = "OPENAI_API_KEY";
+const OPENAI_ORGANIZATION = "OPENAI_ORGANIZATION";
 
 const PromptType = {
 	CREATE_NOTES: "Write detailed notes about this video transcript part in a bullet list .\n\n---\n\nTranscript part:\n\n",
@@ -21,13 +23,12 @@ const summarizePrompt: ChatCompletionRequestMessage = {
 
 export async function createSummarizedTranscript(transcriptChunks: string[]): Promise<string> {
 	const openai = new OpenAIApi(new Configuration({
-		apiKey: process.env.OPENAI_API_KEY,
-		organization: process.env.OPENAI_ORGANIZATION,
+		apiKey: OPENAI_API_KEY,
+		organization: OPENAI_ORGANIZATION,
 	}));
 
 	const allNotes = await createNotesForChunks(transcriptChunks, openai);
 	const allNotesText = allNotes.join('\n\n---\n\n');
-	fs.writeFileSync('notes.md', allNotesText);
 
 	console.log("Creating final summary...");
 

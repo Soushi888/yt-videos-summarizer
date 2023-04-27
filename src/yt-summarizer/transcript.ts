@@ -1,4 +1,4 @@
-import {TranscriptResponse, YoutubeTranscript} from "youtube-transcript";
+import {type TranscriptResponse, YoutubeTranscript} from "youtube-transcript";
 
 export async function fetchTranscript(url: string): Promise<string> {
 	try {
